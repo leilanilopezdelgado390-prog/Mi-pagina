@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verbos Regulares e Irregulares</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .correct { color: #10B981 !important; font-weight: bold; }
+        .incorrect { color: #EF4444 !important; font-weight: bold; }
+        .btn-level { transition: all 0.3s ease; }
+        .btn-level:hover { transform: translateY(-2px); }
+        .card { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        input:focus, button:focus { outline: none; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8 px-4">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl p-6 md:p-10 card">
+        <header class="text-center mb-10">
+            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-extrabold text-indigo-700 mb-2">📚 Verbos Regulares e Irregulares</h1>
+            <p class="text-gray-600 text-lg">Aprende y practica rápido</p>
+        </header>
+
+        <!-- SECCIÓN 1: EJEMPLOS INTERACTIVOS (SIN BOTONES) -->
+        <section id="ejercicios" class="mb-12">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-6 border-b-2 border-indigo-100 pb-2">✍️ Ejercicios Interactivos</h2>
+            <p class="mb-4 text-gray-700">Escribe y se corrige solo. <span class="text-green-500 font-bold">Verde = Bien</span> | <span class="text-red-500 font-bold">Rojo = Mal</span></p>
+
+            <div class="space-y-6">
+                <!-- Ejercicio 1 -->
+                <div class="p-4 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-2">1. Palabra: <span class="text-indigo-700">Work</span></p>
+                    <input type="text" id="input1" placeholder="Escribe aquí..." class="w-full p-3 border-2 border-gray-300 rounded-lg text-lg">
+                    <div id="feedback1" class="mt-2 text-lg"></div>
+                </div>
+
+                <!-- Ejercicio 2 -->
+                <div class="p-4 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-2">2. Palabra: <span class="text-indigo-700">Play</span></p>
+                    <input type="text" id="input2" placeholder="Escribe aquí..." class="w-full p-3 border-2 border-gray-300 rounded-lg text-lg">
+                    <div id="feedback2" class="mt-2 text-lg"></div>
+                </div>
+
+                <!-- Ejercicio 3 -->
+                <div class="p-4 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-2">3. Palabra: <span class="text-indigo-700">Go</span></p>
+                    <input type="text" id="input3" placeholder="Escribe aquí..." class="w-full p-3 border-2 border-gray-300 rounded-lg text-lg">
+                    <div id="feedback3" class="mt-2 text-lg"></div>
+                </div>
+                
+                <!-- Ejercicio 4 -->
+                <div class="p-4 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-2">4. Palabra: <span class="text-indigo-700">Eat</span></p>
+                    <input type="text" id="input4" placeholder="Escribe aquí..." class="w-full p-3 border-2 border-gray-300 rounded-lg text-lg">
+                    <div id="feedback4" class="mt-2 text-lg"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: JUEGO DIDÁCTICO -->
+        <section id="juego" class="mb-12">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-6 border-b-2 border-indigo-100 pb-2">🎮 Juego: Conecta las Palabras</h2>
+            <p class="mb-4 text-gray-700">Toca la opción correcta. <span class="text-red-500 font-bold">¡Si fallas, se reinicia!</span></p>
+
+            <div class="flex flex-wrap gap-3 mb-6 justify-center">
+                <button onclick="cargarNivel(1)" class="btn-level bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow">🔵 Nivel 1</button>
+                <button onclick="cargarNivel(2)" class="btn-level bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-full shadow">🟡 Nivel 2</button>
+                <button onclick="cargarNivel(3)" class="btn-level bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full shadow">🔴 Nivel 3</button>
+            </div>
+
+            <div id="contenidoJuego" class="grid md:grid-cols-2 gap-4 p-6 bg-gray-50 rounded-xl min-h-[200px] items-center">
+                <p class="text-center text-gray-500 col-span-2 text-lg">Selecciona un nivel para empezar</p>
+            </div>
+            <div id="feedbackJuego" class="text-center mt-4 text-xl font-bold"></div>
+        </section>
+
+        <!-- SECCIÓN 3: TEST DE EVALUACIÓN (SIN BOTÓN) -->
+        <section id="test" class="mb-12">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-6 border-b-2 border-indigo-100 pb-2">📝 Test de Evaluación</h2>
+            <p class="mb-4 text-gray-700">Selecciona y verás tu nota al instante.</p>
+
+            <div class="space-y-6">
+                <!-- Pregunta 1 -->
+                <div class="p-5 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-3">1. ¿Cuál es el pasado de "Walk"?</p>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q1" value="a" class="mr-2" onclick="calcularNota()"> A) Walks</label>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q1" value="b" class="mr-2" onclick="calcularNota()"> B) Walked</label>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q1" value="c" class="mr-2" onclick="calcularNota()"> C) Walking</label>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="p-5 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-3">2. ¿Cuál es el pasado de "See"?</p>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q2" value="a" class="mr-2" onclick="calcularNota()"> A) Seed</label>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q2" value="b" class="mr-2" onclick="calcularNota()"> B) Saw</label>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q2" value="c" class="mr-2" onclick="calcularNota()"> C) Seeed</label>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="p-5 bg-gray-50 rounded-xl">
+                    <p class="font-semibold text-lg mb-3">3. ¿Cuál es el pasado de "Stop"?</p>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q3" value="a" class="mr-2" onclick="calcularNota()"> A) Stoped</label>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q3" value="b" class="mr-2" onclick="calcularNota()"> B) Stopped</label>
+                    <label class="block mb-2 cursor-pointer"><input type="radio" name="q3" value="c" class="mr-2" onclick="calcularNota()"> C) Stops</label>
+                </div>
+            </div>
+
+            <div id="resultadoTest" class="mt-6 text-center text-2xl font-bold p-4 rounded-xl"></div>
+        </section>
+
+        <!-- SECCIÓN 4: BLOG -->
+        <section id="blog">
+            <h2 class="text-2xl font-bold text-indigo-600 mb-6 border-b-2 border-indigo-100 pb-2">📓 Blog de Comentarios</h2>
+            <div class="p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl border border-purple-100">
+                <h3 class="text-xl font-bold text-purple-700 mb-3">📝 Reseña Rápida</h3>
+                <p class="text-gray-700 leading-relaxed text-lg">
+                    "En esta sección aprendimos la diferencia entre verbos regulares (terminan en -ed) e irregulares (cambian su forma). Practicamos con ejercicios y juegos para mejorar nuestra escritura y memoria. ¡Es importante practicar todos los días!"
+                </p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // --- 1. EJERCICIOS: SE CORRIGEN SOLOS AL ESCRIBIR ---
+        function checkInput(inputId, feedbackId, correctAnswer) {
+            const input = document.getElementById(inputId);
+            const feedback = document.getElementById(feedbackId);
+            
+            input.addEventListener('input', function() {
+                const userValue = this.value.trim().toLowerCase();
+                
+                if (userValue === correctAnswer.toLowerCase()) {
+                    feedback.textContent = "✅ ¡Correcto!";
+                    feedback.className = "mt-2 text-lg correct";
+                    this.classList.remove('border-red-500');
+                    this.classList.add('border-green-500');
+                } else {
+                    feedback.textContent = "❌ Incorrecto";
+                    feedback.className = "mt-2 text-lg incorrect";
+                    this.classList.remove('border-green-500');
+                    this.classList.add('border-red-500');
+                }
+            });
+        }
+
+        checkInput('input1', 'feedback1', 'Worked');
+        checkInput('input2', 'feedback2', 'Played');
+        checkInput('input3', 'feedback3', 'Went');
+        checkInput('input4', 'feedback4', 'Ate');
+
+
+        // --- 2. JUEGO ---
+        const niveles = {
+            1: [ {v:'Work',p:'Worked'}, {v:'Play',p:'Played'}, {v:'Live',p:'Lived'}, {v:'Call',p:'Called'} ],
+            2: [ {v:'Study',p:'Studied'}, {v:'Stop',p:'Stopped'}, {v:'Have',p:'Had'}, {v:'Do',p:'Did'} ],
+            3: [ {v:'Go',p:'Went'}, {v:'Eat',p:'Ate'}, {v:'Speak',p:'Spoke'}, {v:'Buy',p:'Bought'} ]
+        };
+
+        let numeroNivelActual = 0;
+
+        function cargarNivel(n) {
+            numeroNivelActual = n;
+            const datos = niveles[n];
+            const container = document.getElementById('contenidoJuego');
+            document.getElementById('feedbackJuego').textContent = '';
+            
+            let html = `<div class="col-span-2 font-bold text-center text-xl mb-2">Nivel ${n}</div>`;
+            
+            datos.forEach(item => {
+                let opciones = [item.p];
+                while(opciones.length < 2) {
+                    let rnd = datos[Math.floor(Math.random() * datos.length)].p;
+                    if(!opciones.includes(rnd) && rnd !== item.p) opciones.push(rnd);
+                }
+                opciones = opciones.sort(() => Math.random() - 0.5);
+
+                html += `
+                    <div class="font-bold text-indigo-700 text-lg p-3 bg-white rounded shadow text-center">${item.v}</div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="verificar('${item.p}', this, '${opciones[0]}')" class="p-3 bg-gray-100 hover:bg-blue-200 rounded font-bold transition">${opciones[0]}</button>
+                        <button onclick="verificar('${item.p}', this, '${opciones[1]}')" class="p-3 bg-gray-100 hover:bg-blue-200 rounded font-bold transition">${opciones[1]}</button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function verificar(correcta, boton, elegida) {
+            const feedback = document.getElementById('feedbackJuego');
+            if (elegida !== correcta) {
+                feedback.textContent = "❌ ¡Error! Reiniciando...";
+                feedback.className = "text-center mt-4 text-xl font-bold incorrect";
+                boton.classList.add('bg-red-500','text-white');
+                setTimeout(() => cargarNivel(numeroNivelActual), 1000);
+            } else {
+                feedback.textContent = "✅ ¡Muy bien!";
+                feedback.className = "text-center mt-4 text-xl font-bold correct";
+                boton.classList.add('bg-green-500','text-white');
+                boton.disabled = true;
+            }
+        }
+
+
+        // --- 3. TEST: CALCULA NOTA AL INSTANTE ---
+        function calcularNota() {
+            const respuestas = { q1: 'b', q2: 'b', q3: 'b' };
+            let puntaje = 0;
+
+            for (let key in respuestas) {
+                const seleccionada = document.querySelector(`input[name="${key}"]:checked`);
+                if (seleccionada && seleccionada.value === respuestas[key]) {
+                    puntaje++;
+                }
+            }
+
+            const resultadoDiv = document.getElementById('resultadoTest');
+            let texto, color;
+
+            if(puntaje === 3) { texto = "🎉 ¡Perfecto! 100%"; color = "bg-green-100 text-green-700"; }
+            else if(puntaje === 2) { texto = "🙂 Bien hecho! 50%"; color = "bg-yellow-100 text-yellow-700"; }
+            else if(puntaje === 1) { texto = "💪 Sigue practicando! 25%"; color = "bg-orange-100 text-orange-700"; }
+            else { texto = "📚 Intenta de nuevo! 0%"; color = "bg-red-100 text-red-700"; }
+
+            resultadoDiv.textContent = texto;
+            resultadoDiv.className = `mt-6 text-center text-2xl font-bold p-4 rounded-xl ${color}`;
+        }
+    </script>
+</body>
+</html>
